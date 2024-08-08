@@ -191,30 +191,17 @@ html可以有属性lang，如`lang="en"`
 
 #### 段落
 
-- align已弃用
-
 ```html
 <p>段落</p>
 ```
 
 #### 换行
 
-- clear已弃用
-
 ```html
 <br>
 ```
 
 ### 分隔线
-
-- 属性已弃用
-
-<!-- |属性|值|说明|
-|:---:|---|---|
-|width|px或%|宽度|
-|size|px(整数)|高度|
-|color|rgb,十六进制,英文名|颜色|
-|align|left\|center\|right|对齐方式| -->
 
 ```html
 <hr>
@@ -345,13 +332,13 @@ html可以有属性lang，如`lang="en"`
 
 ```html
 <figure>
-  <blockquote>
-    <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
-  </blockquote>
-  <figcaption>
-    First sentence in <cite><a href="http://www.george-orwell.org/1984/0.html">Nineteen Eighty-Four</a></cite> by George
-    Orwell (Part 1, Chapter 1).
-  </figcaption>
+    <blockquote>
+        <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
+    </blockquote>
+    <figcaption>
+        First sentence in <cite><a href="http://www.george-orwell.org/1984/0.html">Nineteen Eighty-Four</a></cite> by George
+        Orwell (Part 1, Chapter 1).
+    </figcaption>
 </figure>
 
 <blockquote>
@@ -408,20 +395,82 @@ anchor
 <a href="url#书签id">书签标题</a> <!-- 不同页面 -->
 ```
 
+### 题注
+
+```html
+<!-- 有标题的图像 -->
+<figure>
+    <img
+        src="/zh-CN/docs/Web/HTML/Element/figure/favicon-192x192.png"
+        alt="The beautiful MDN logo.">
+    <figcaption>MDN Logo</figcaption>
+</figure>
+```
+
 ### 图片
 
 - `src`必须，其他可选
-- allign已弃用
 - 可套超链接
 
 |属性|值|说明|
 |:---:|:---:|---|
-|`src`|本地/网络|路径地址|
+|`src`|`<url>`|路径地址|
 |`alt`||替换文本|
-|`width`\|`height`|整数(px)|宽度\|高度|
+|`width`\|`height`|`"整数"`(px)|宽度\|高度|
+|`srcset`||以逗号分隔的一个或多个字符串列表|
 
 ```html
 <img alt="替换文本" src="minecraft.jpg" title="图片">
+```
+
+> 同时包括 `height` 和 [`width`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img#attr-width) 使浏览器在加载图像之前计算图像的长宽比。此长宽比用于保留显示图像所需的空间，减少甚至防止在下载图像并将其绘制到屏幕上时布局的偏移。
+
+#### 矢量图片
+
+svg
+
+可通过`<img>` 元素嵌入 SVG
+
+[SVG：可缩放矢量图形 | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/SVG)
+
+#### 响应式图片
+
+##### srcset
+
+每一个字符串由以下组成：
+
+1. 指向图像的 [URL](https://developer.mozilla.org/zh-CN/docs/Glossary/URL)
+2. 可选地，再加一个空格之后，附加以下的其一：
+   - 一个宽度描述符（一个正整数，后面紧跟 `w` 符号）
+   - 一个像素密度描述符（一个正浮点数，后面紧跟 `x` 符号）
+
+```html
+<img srcset="
+	space-original.jpg 4x,
+	space-large.jpg 3x,
+	space-medium.jpg 2x,
+	space-small.jpg 1x"
+src="space-medium.jpg">
+
+<img srcset="
+	space-original.jpg 6200w,
+	space-1024.jpg 1024w,
+	space-800.jpg 800w,
+	space-600.jpg 600w"
+src="space-1024.jpg">
+```
+
+> src属性为尚不支持srcset的浏览器准备，属于一种回退机制。
+
+##### picture
+
+```html
+<picture>
+    <source media="(min-width: 1025px)" srcset="space-original.jpg">
+    <source media="(min-width: 801px)" srcset="space-1024.jpg">
+    <source media="(min-width: 601px)" srcset="space-800.jpg">
+    <img src="space-600.jpg">
+</picture>
 ```
 
 #### 热区链接
@@ -444,29 +493,29 @@ anchor
 |`href`|||
 |`alt`||在`href`使用时是必须的|
 |`shape`|`default`(默认)\|`rect`\|`circle`\|`poly`|整个\|矩形\|圆形\|多边形|
-|`coords`|整数(px)|[坐标值](#坐标)|
-|`target`|||
+|`coords`|`整数`(px)|[坐标值](#坐标)|
+|`target`|""||
 
 ```html
 <!-- 引用自https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/map -->
 <map name="primary">
-  <area
-    shape="circle"
-    coords="75,75,75"
-    href="https://developer.mozilla.org/docs/Web/JavaScript"
-    target="_blank"
-    alt="JavaScript" />
-  <area
-    shape="circle"
-    coords="275,75,75"
-    href="https://developer.mozilla.org/docs/Web/CSS"
-    target="_blank"
-    alt="CSS" />
+    <area
+        shape="circle"
+        coords="75,75,75"
+        href="https://developer.mozilla.org/docs/Web/JavaScript"
+        target="_blank"
+        alt="JavaScript">
+    <area
+        shape="circle"
+        coords="275,75,75"
+        href="https://developer.mozilla.org/docs/Web/CSS"
+        target="_blank"
+        alt="CSS">
 </map>
 <img
-  usemap="#primary"
-  src="parrots.jpg"
-  alt="两只鹦鹉的照片，大小为 350 x 150" />
+    usemap="#primary"
+    src="parrots.jpg"
+    alt="两只鹦鹉的照片，大小为 350 x 150">
 ```
 
 ###### 坐标
@@ -475,7 +524,23 @@ anchor
 
 ### 其他媒体
 
-Todo
+#### 视频和音频
+
+|       属性        |      值      | 说明                            |
+| :---------------: | :----------: | ------------------------------- |
+|       `src`       |   `<url>`    | 路径地址                        |
+| `width`\|`height` | `"整数"`(px) | 宽度\|高度，`<audio>`元素不支持 |
+|    `controls`     |              | 浏览器自带的控制界面            |
+
+```html
+<video controls>
+    <source src="rabbit320.mp4" type="video/mp4">
+    <source src="rabbit320.webm" type="video/webm">
+    <p>你的浏览器不支持此视频。可点击<a href="rabbit320.mp4">此链接</a>观看</p>
+</video>
+```
+
+> type非必须，但仍可写上，尤其是多视频源情况下。
 
 ### 行级和块级
 
@@ -495,37 +560,33 @@ Todo
 
 - 流内容通用块容器
 - 使用class或是id属性定义内容的格式
-- allign已弃用
 
 ### 表格
 
-- 部分属性已弃用
-
 |标签名|说明|
 |:---:|---|
-|table|表格|
-|tr|行|
-|th|标题|
-|td|数据|
+|`table`|表格|
+|`tr`|行|
+|`th`|标题，对于`<thead>`里的元素使用`th`代替`td`，默认粗体|
+|`td`|数据|
 
 #### 合并单元格
 
 |属性|值|说明|
 |:---:|---|---|
-|rowspan|"\<整数\>"|跨行|
-|colspan|"\<整数\>"|跨列|
+|`rowspan`|`"整数"`|跨行|
+|`colspan`|`"整数"`|跨列|
 
 #### 结构化
 
 - 按行分组
-- body可以有多个
 
 |标签名|说明|
 |:---:|---|
-|caption|表格|
-|thead|头|
-|tbody|主体|
-|tfoot|尾|
+|`caption`|表格|
+|`thead`|头|
+|`tbody`|主体|
+|`tfoot`|尾|
 
 #### 直列化
 
@@ -533,21 +594,29 @@ Todo
 
 |标签名|说明|
 |:---:|---|
-|colgroup|列组|
+|`colgroup`|列组|
+|`col`|父元素`colgroup`中一列或多列，只有在没有`span`属性的父元素中才有效|
+
+|属性|值|说明|
+|:---:|---|---|
+|`span`|`"整数"`|跨越的连续列数。该值必须是正整数。如果不存在，其默认值为 `1`|
 
 ```html
-<!-- 前两列为一组 -->
+<colgroup span="5" class="weekdays"></colgroup>
+<colgroup span="2" class="weekend"></colgroup>
+```
+
+```html
 <colgroup>
     <col>
-    <col>
+    <col span="2" class="batman">
+    <col span="2" class="flash">
 </colgroup>
 ```
 
 ### 结构标签
 
-section, article, aside, header, footer, nav, hgroup
-
-Todo
+`header`, `footer`, `nav`, `section`, `article`, `aside`, `main`
 
 ### 表单
 
@@ -601,33 +670,3 @@ Todo
 - reset: 重置按钮
 - button: 可单击按钮
   - 可设置onclick事件
-
-Todo
-
-### 附录
-
-#### 内容分类
-
-<!-- 
-## 内容模型
-
-- "nothing"内容模型
-- 内容种类
-  - 元数据内容
-  - 流式内容
-  - 切片内容
-  - 标题内容
-  - 措辞内容
-  - 嵌入内容
-  - 互动内容
-  - 可触及的内容
-  - 脚本支持元素
-- 透明内容模型
-- 段落
-
-### 元数据内容
-
-元数据内容是设置其余内容的呈现或行为， 设置文档与其他文档的关系，传达其他“带外”信息的内容。
-⇒ base, link, meta, noscript, script, style, template, title等
-
-*其他内容模型可参阅文档* -->
